@@ -45,6 +45,17 @@
                         <p:column headerText="Membresia">
                             <h:outputText value="#{cliente.membresia}"/>
                         </p:column>
+
+                        <p:column>
+                            <p:commandButton value="Editar" icon="pi pi-pencil" update=":forma-modal:cliente-ventana" process="@this" oncomplete="PF('ventanaModalCliente').show()" class="ui-button-primary" style="margin-right:.5rem">
+                                <f:setPropertyActionListener value="#{cliente}" target="#{indexController.clienteSeleccionado}"/>
+                                <p:resetInput target=":forma-modal:cliente-ventana"/>
+                            </p:commandButton>
+
+                            <p:commandButton value="Eliminar" class="ui-button-danger" icon="pi pi-trash" process="@this" oncomplete="PF('eliminarClienteVentana').show()">
+                                <f:setPropertyActionListener value="#{cliente}" target="#{indexController.clienteSeleccionado}"/>
+                            </p:commandButton>
+                        </p:column>
                     </p:dataTable>
                 </div>
             </h:form>
@@ -73,6 +84,10 @@
                         <p:commandButton value="Cancelar" icon="pi pi-timex" onclick="PF('ventanaModalCliente').hide()" class="ui-button-secondary" type="button"/>
                     </f:facet>
                 </p:dialog>
+                <p:confirmDialog widgetVar="eliminarClienteVentana" showEffect="fade" width="300" message="Eliminar Cliente?" header="Confirmar" severity="warn">
+                    <p:commandButton value="Si" icon="pi pi-check" actionListener="#{indexController.eliminarCliente}" process="@this" oncomplete="PF('eliminarClienteVentana').hide()"/>
+                    <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times" onclick="PF('eliminarClienteVentana').hide()"/> 
+                </p:confirmDialog>
             </h:form>
         </div>
 
